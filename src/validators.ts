@@ -1,5 +1,7 @@
 export function notEmpty(x, key) {
-  return x !== null && typeof x !== undefined && x !== undefined ? true : `${key} is required`;
+  return x !== null && typeof x !== undefined && x !== undefined
+    ? true
+    : `${key} is required`;
 }
 
 export function isString(x, key) {
