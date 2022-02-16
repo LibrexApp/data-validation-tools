@@ -85,7 +85,7 @@ console.log(result); // in this case, this will return ['name is required']
 We currently support the following validation options:
 
 ```ts
-required: boolean, //true,
+required: boolean, // true/false
 type: EDataType.STRING, // enum of STRING, NUMBER, BOOLEAN,
 minValue: number, // (optional) number is >= the value passed
 maxValue: number, // (optional) number is <= the value passed
