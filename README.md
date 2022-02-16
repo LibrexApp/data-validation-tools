@@ -1,5 +1,7 @@
 # data-validation-tools
 
+[![Publish](https://github.com/LibrexApp/data-validation-tools/actions/workflows/publish.yml/badge.svg)](https://github.com/LibrexApp/data-validation-tools/actions/workflows/publish.yml)
+
 Some handy dandy helpers for data validation
 
 # How to use
