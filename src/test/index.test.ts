@@ -33,6 +33,30 @@ const PersonSchema = [
     required: false,
     type: EDataType.BOOLEAN,
   },
+  {
+    key: "followers",
+    required: false,
+    type: EDataType.NUMBER,
+    minValue: 10,
+  },
+  {
+    key: "parkingTickets",
+    required: false,
+    type: EDataType.NUMBER,
+    maxValue: 2,
+  },
+  {
+    key: "password",
+    required: false,
+    type: EDataType.STRING,
+    minLength: 8,
+  },
+  {
+    key: "zipcode",
+    required: false,
+    type: EDataType.STRING,
+    maxLength: 8,
+  },
 ];
 
 describe("DataValidator", () => {
@@ -71,6 +95,46 @@ describe("DataValidator", () => {
     };
     const result = DataValidator(invalidPerson, PersonSchema);
     expect(result[0]).toEqual("male must be a boolean");
+  });
+  it(`Should return "followers must be 10 or more"`, () => {
+    const invalidPerson = {
+      name: "James Bond",
+      age: 30,
+      male: true,
+      followers: 5,
+    };
+    const result = DataValidator(invalidPerson, PersonSchema);
+    expect(result[0]).toEqual("followers must be 10 or more");
+  });
+  it(`Should return "parkingTickets must be 2 or less"`, () => {
+    const invalidPerson = {
+      name: "Donkey Kong",
+      age: 22,
+      male: false,
+      parkingTickets: 5,
+    };
+    const result = DataValidator(invalidPerson, PersonSchema);
+    expect(result[0]).toEqual("parkingTickets must be 2 or less");
+  });
+  it(`Should return "password must be 8 characters or more"`, () => {
+    const invalidPerson = {
+      name: "Hacker Jon",
+      age: 22,
+      male: true,
+      password: "1234",
+    };
+    const result = DataValidator(invalidPerson, PersonSchema);
+    expect(result[0]).toEqual("password must be 8 characters or more");
+  });
+  it(`Should return "zipcode must be 8 characters or less"`, () => {
+    const invalidPerson = {
+      name: "Carmen Sandiego",
+      age: 22,
+      male: false,
+      zipcode: "1A2B3C4D5E",
+    };
+    const result = DataValidator(invalidPerson, PersonSchema);
+    expect(result[0]).toEqual("zipcode must be 8 characters or less");
   });
   it("Should return an errors array of length 6 because 6 invalid options were supplied", () => {
     const invalidPerson = {
