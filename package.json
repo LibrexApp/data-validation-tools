@@ -1,5 +1,5 @@
 {
-    "name": "typescript-interface-validator",
+    "name": "data-validation-tools",
     "version": "0.0.1",
     "description": "validate interfaces at runtime",
     "main": "index.js",
@@ -22,14 +22,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Andrew-Pynch/typescript-interface-validator.git"
+        "url": "git+https://github.com/LibrexApp/data-validation-tools.git"
     },
     "author": "andrew pynch, tyler roland",
-    "license": "ISC",
+    "license": "MIT",
     "bugs": {
-        "url": "https://github.com/Andrew-Pynch/typescript-interface-validator/issues"
+        "url": "https://github.com/LibrexApp/data-validation-tools/issues"
     },
-    "homepage": "https://github.com/Andrew-Pynch/typescript-interface-validator#readme",
+    "homepage": "https://github.com/LibrexApp/data-validation-tools#readme",
     "dependencies": {
         "@types/jest": "^27.4.0",
         "jest": "^27.5.1",
