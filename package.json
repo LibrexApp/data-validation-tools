@@ -1,6 +1,6 @@
 {
   "name": "data-validation-tools",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Handy tools",
   "main": "index.js",
   "files": [

@@ -6,6 +6,14 @@ Some handy dandy helpers for data validation
 
 # How to use
 
+View package on [NPM](https://www.npmjs.com/package/data-validation-tools)
+
+## Install package
+
+```ts
+yarn add data-validation-tools
+```
+
 ## Import
 
 ```ts
