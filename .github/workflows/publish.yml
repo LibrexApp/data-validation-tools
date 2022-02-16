@@ -28,6 +28,7 @@ jobs:
               run: npm run build
             - name: Run tests
               run: npm run test
+            - name: Publish
               with:
                   node-version: 16
                   registry-url: https://registry.npmjs.org/
