@@ -1,6 +1,7 @@
 import { EDataType } from "./edata-types";
 import { ISchemaOption } from "./ISchemaOption";
 import {
+  inArray,
   isBool,
   isInt,
   isObject,
@@ -10,6 +11,7 @@ import {
   minLength,
   minValue,
   notEmpty,
+  objHasKeys,
 } from "./validators";
 
 export const DataValidator = (payload: any, schemaOptions: ISchemaOption[]) => {
@@ -61,6 +63,16 @@ export const DataValidator = (payload: any, schemaOptions: ISchemaOption[]) => {
       //minValue
       if (schemaOption.hasOwnProperty("minValue")) {
         results.push(minValue(value, key, schemaOption.minValue));
+      }
+
+      //inArray
+      if (schemaOption.hasOwnProperty("inArray")) {
+        results.push(inArray(value, key, schemaOption.inArray));
+      }
+
+      //objHasKeys
+      if (schemaOption.hasOwnProperty("objHasKeys")) {
+        results.push(objHasKeys(schemaOption.objHasKeys, key, value));
       }
     }
   });

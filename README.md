@@ -54,6 +54,18 @@ const PersonSchema: ISchemaOption = [
     required: false,
     type: EDataType.BOOLEAN,
   },
+  {
+    key: "occupation",
+    required: false,
+    type: EDataType.STRING,
+    inArray: ["doctor", "lawyer"],
+  },
+  {
+    key: "hair",
+    required: false,
+    type: EDataType.OBJECT,
+    objHasKeys: ["color", "length"],
+  },
 ];
 ```
 
@@ -94,9 +106,11 @@ We currently support the following validation options:
 
 ```ts
 required: boolean, // true/false
-type: EDataType.STRING, // enum of STRING, NUMBER, BOOLEAN,
+type: EDataType.STRING, // enum of STRING, NUMBER, BOOLEAN, OBJECT, ANY
 minValue: number, // (optional) number is >= the value passed
 maxValue: number, // (optional) number is <= the value passed
 minLength: number, // (optional) length of a string is >= the value passed
 maxLength: number, // (optional) length of a string is <= the value passed
+inArray: string[], // (optional) value passed must match one of the array indexes passed
+objHasKey: string[], // (optional) object passed must contain all of array of keys passed
 ```

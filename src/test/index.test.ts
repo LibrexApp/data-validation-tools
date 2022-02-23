@@ -62,6 +62,18 @@ const PersonSchema = [
     required: false,
     type: EDataType.OBJECT,
   },
+  {
+    key: "hair",
+    required: false,
+    type: EDataType.OBJECT,
+    objHasKeys: ["color", "length"],
+  },
+  {
+    key: "occupation",
+    required: false,
+    type: EDataType.STRING,
+    inArray: ["lawyer", "doctor"],
+  },
 ];
 
 describe("DataValidator", () => {
@@ -151,7 +163,7 @@ describe("DataValidator", () => {
       weight: "this is a string!",
     };
     const result = DataValidator(invalidPerson, PersonSchema);
-    expect(result !== true ? result.length : []).toEqual(6);
+    expect(result !== true ? result.length : 0).toEqual(6);
   });
   it("Should return is not an object", () => {
     const invalidPerson = {
@@ -162,5 +174,29 @@ describe("DataValidator", () => {
     };
     const result = DataValidator(invalidPerson, PersonSchema);
     expect(result[0]).toEqual("settings must be an object");
+  });
+  it("Should return an error array because one object property is missing", () => {
+    const invalidPerson = {
+      name: "joe",
+      age: 55,
+      male: true,
+      hair: {
+        color: "brown",
+      },
+    };
+    const result = DataValidator(invalidPerson, PersonSchema);
+    expect(result !== true ? result.length : 0).toEqual(1);
+  });
+  it(`Should return "must be one of the following: lawyer, doctor"`, () => {
+    const invalidPerson = {
+      name: "joe",
+      age: 55,
+      male: true,
+      occupation: "software engineer",
+    };
+    const result = DataValidator(invalidPerson, PersonSchema);
+    expect(result[0]).toEqual(
+      "occupation must be one of the following: lawyer, doctor"
+    );
   });
 });

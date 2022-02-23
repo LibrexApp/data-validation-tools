@@ -35,3 +35,24 @@ export function maxValue(x, key, max) {
 export function minValue(x, key, min) {
   return x >= min ? true : `${key} must be ${min} or more`;
 }
+
+export function inArray(x, key, array) {
+  return array.includes(x)
+    ? true
+    : `${key} must be one of the following: ${array.join(", ")}`;
+}
+
+//if we want to check if an object has 1 or more required keys
+//x = ['color', 'length']
+//obj = hair: {color: 'brown', length: 'short'}
+export function objHasKeys(x, key, obj) {
+  let errors = x
+    .map((e) => {
+      return obj.hasOwnProperty(e)
+        ? true
+        : `${key} must have the following property: ${e}`;
+    })
+    .filter((e) => e !== true);
+
+  return errors.length == 0 ? true : errors;
+}

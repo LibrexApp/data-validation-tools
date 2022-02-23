@@ -9,4 +9,6 @@ export interface ISchemaOption {
   maxValue?: number;
   minLength?: number;
   maxLength?: number;
+  objHasKeys?: any;
+  inArray?: any;
 }
