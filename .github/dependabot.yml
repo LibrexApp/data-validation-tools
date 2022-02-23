@@ -5,7 +5,7 @@ updates:
       schedule:
           interval: weekly
       open-pull-requests-limit: 10
-      target-branch: main
+      target-branch: develop
       reviewers:
           - Andrew-Pynch
       assignees:
