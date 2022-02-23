@@ -57,6 +57,11 @@ const PersonSchema = [
     type: EDataType.STRING,
     maxLength: 8,
   },
+  {
+    key: "settings",
+    required: false,
+    type: EDataType.OBJECT,
+  },
 ];
 
 describe("DataValidator", () => {
@@ -147,5 +152,15 @@ describe("DataValidator", () => {
     };
     const result = DataValidator(invalidPerson, PersonSchema);
     expect(result !== true ? result.length : []).toEqual(6);
+  });
+  it("Should return is not an object", () => {
+    const invalidPerson = {
+      name: "namer",
+      age: 1235,
+      male: true,
+      settings: "test",
+    };
+    const result = DataValidator(invalidPerson, PersonSchema);
+    expect(result[0]).toEqual("settings must be an object");
   });
 });

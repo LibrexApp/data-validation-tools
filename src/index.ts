@@ -3,12 +3,13 @@ import { ISchemaOption } from "./ISchemaOption";
 import {
   isBool,
   isInt,
+  isObject,
   isString,
-  notEmpty,
-  minLength,
   maxLength,
-  minValue,
   maxValue,
+  minLength,
+  minValue,
+  notEmpty,
 } from "./validators";
 
 export const DataValidator = (payload: any, schemaOptions: ISchemaOption[]) => {
@@ -34,6 +35,9 @@ export const DataValidator = (payload: any, schemaOptions: ISchemaOption[]) => {
           break;
         case EDataType.BOOLEAN:
           results.push(isBool(value, key));
+          break;
+        case EDataType.OBJECT:
+          results.push(isObject(value, key));
           break;
         default:
           break;

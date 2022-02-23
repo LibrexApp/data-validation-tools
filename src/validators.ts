@@ -16,6 +16,10 @@ export function isBool(x, key) {
   return typeof x === "boolean" ? true : `${key} must be a boolean`;
 }
 
+export function isObject(x, key) {
+  return typeof x === "object" ? true : `${key} must be an object`;
+}
+
 export function maxLength(x, key, max) {
   return x?.length <= max ? true : `${key} must be ${max} characters or less`;
 }
