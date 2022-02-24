@@ -79,6 +79,7 @@ const PersonSchema = [
 describe("DataValidator", () => {
   it('Should return "name is required"', () => {
     const invalidPerson = {
+      name: "",
       age: 21,
       male: true,
     };
