@@ -38,7 +38,7 @@ export const DataValidator = (payload: any, schemaOptions: ISchemaOption[]) => {
                 case EDataType.BOOLEAN:
                     results.push(isBool(value, key));
                     break;
-                case EDataType.OBJECT:
+                case EDataType.OBJECT: // REUQUIRES SCHEMA OPTIONS ARRAY
                     results.push(isObject(value, key));
                     break;
                 default:
@@ -78,6 +78,20 @@ export const DataValidator = (payload: any, schemaOptions: ISchemaOption[]) => {
             // customValidator function
             if (schemaOption.hasOwnProperty('customValidator')) {
                 results.push(schemaOption.customValidator(value, key));
+            }
+
+            // if is object, it should have an array of schemaOptions
+            if (schemaOption.type === EDataType.OBJECT) {
+                if (schemaOption.hasOwnProperty('schemaOptions')) {
+                    const subResults = DataValidator(
+                        value,
+                        schemaOption.schemaOptions
+                    );
+
+                    if (subResults !== true) {
+                        results.push({ [key]: subResults });
+                    }
+                }
             }
         }
     });
