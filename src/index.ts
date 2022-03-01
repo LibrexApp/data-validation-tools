@@ -74,6 +74,11 @@ export const DataValidator = (payload: any, schemaOptions: ISchemaOption[]) => {
             if (schemaOption.hasOwnProperty('objHasKeys')) {
                 results.push(objHasKeys(schemaOption.objHasKeys, key, value));
             }
+
+            // customValidator function
+            if (schemaOption.hasOwnProperty('customValidator')) {
+                results.push(schemaOption.customValidator(value, key));
+            }
         }
     });
 

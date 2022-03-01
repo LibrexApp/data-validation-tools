@@ -73,6 +73,19 @@ const PersonSchema = [
         required: false,
         type: EDataType.STRING,
         inArray: ['lawyer', 'doctor'],
+        customValidator: (value: any, key: 'occupation') =>
+            value !== 'police officer'
+                ? 'occupation must not be "police officer"'
+                : true,
+    },
+    {
+        key: 'secondaryOccupation',
+        required: false,
+        type: EDataType.STRING,
+        customValidator: (value: any, key: 'secondaryOccupation') =>
+            value !== 'police officer'
+                ? 'occupation must not be "police officer"'
+                : true,
     },
 ];
 
@@ -199,5 +212,16 @@ describe('DataValidator', () => {
         expect(result[0]).toEqual(
             'occupation must be one of the following: lawyer, doctor'
         );
+    });
+    it(`Should return "must `, () => {
+        const invalidPerson = {
+            name: 'joe',
+            age: 55,
+            male: true,
+            occupation: 'lawyer',
+            secondaryOccupation: 'police officer',
+        };
+        const result = DataValidator(invalidPerson, PersonSchema);
+        expect(result[0]).toEqual('occupation must not be "police officer"');
     });
 });
