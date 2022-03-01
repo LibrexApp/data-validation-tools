@@ -254,6 +254,7 @@ describe('DataValidator', () => {
             },
         };
         const result = DataValidator(invalidPerson, PersonSchema) as any;
+        console.log('RESULT', result);
         expect(result[0].settings[0]).toEqual('private is required');
         expect(result[0].settings[2].notifications[0]).toEqual(
             'muted is required'

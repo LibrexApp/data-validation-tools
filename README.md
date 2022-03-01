@@ -146,3 +146,56 @@ const isValidPersonCheck1 = DataValidator(
 );
 // this evaluates to true since our value passes the customValidation check
 ```
+
+# Nested Validators
+
+Simply set the schemaOptions property of a schemaOption to a nested array of schema options. Data validation tools will handle the rest!
+
+```ts
+const SettingsSchema = [
+    {
+        key: 'settings',
+        required: false,
+        type: EDataType.OBJECT,
+        schemaOptions: [
+            {
+                key: 'private',
+                required: true,
+                type: EDataType.BOOLEAN,
+            },
+            {
+                key: 'notifications',
+                required: true,
+                type: EDataType.OBJECT,
+                schemaOptions: [
+                    { key: 'muted', required: true, type: EDataType.BOOLEAN },
+                    {
+                        key: 'mobileEnabled',
+                        required: true,
+                        type: EDataType.BOOLEAN,
+                    },
+                ],
+            },
+        ],
+    },
+];
+```
+
+Validation this some data against this schema would return the following...
+
+```ts
+const invalidInstance = {
+    settings: {
+        notifications: {},
+    },
+};
+
+const dataIsValid = DataValidator(invalidInstance, SettingsSchema);
+
+console.log(dataIsValid);
+// RESULT [
+//   {
+//     settings: [ 'private is required', 'notifications is required', [Object] ]
+//   }
+// ]
+```
