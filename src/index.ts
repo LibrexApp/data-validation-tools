@@ -1,82 +1,82 @@
-import { EDataType } from "./edata-types";
-import { ISchemaOption } from "./ISchemaOption";
+import { EDataType } from './EDataTypes';
+import { ISchemaOption } from './ISchemaOption';
 import {
-  inArray,
-  isBool,
-  isInt,
-  isObject,
-  isString,
-  maxLength,
-  maxValue,
-  minLength,
-  minValue,
-  notEmpty,
-  objHasKeys,
-} from "./validators";
+    inArray,
+    isBool,
+    isInt,
+    isObject,
+    isString,
+    maxLength,
+    maxValue,
+    minLength,
+    minValue,
+    notEmpty,
+    objHasKeys,
+} from './Validators';
 
 export const DataValidator = (payload: any, schemaOptions: ISchemaOption[]) => {
-  const results = [];
+    const results = [];
 
-  schemaOptions.map((schemaOption: ISchemaOption) => {
-    const key = schemaOption.key;
-    const value = payload[key]; // value from payload
-    const hasValue = value !== null && value !== undefined;
+    schemaOptions.map((schemaOption: ISchemaOption) => {
+        const key = schemaOption.key;
+        const value = payload[key]; // value from payload
+        const hasValue = value !== null && value !== undefined;
 
-    if (schemaOption.required) {
-      results.push(notEmpty(value, key));
-    }
+        if (schemaOption.required) {
+            results.push(notEmpty(value, key));
+        }
 
-    if (hasValue) {
-      //type checking
-      switch (schemaOption.type) {
-        case EDataType.STRING:
-          results.push(isString(value, key));
-          break;
-        case EDataType.NUMBER:
-          results.push(isInt(value, key));
-          break;
-        case EDataType.BOOLEAN:
-          results.push(isBool(value, key));
-          break;
-        case EDataType.OBJECT:
-          results.push(isObject(value, key));
-          break;
-        default:
-          break;
-      }
+        if (hasValue) {
+            //type checking
+            switch (schemaOption.type) {
+                case EDataType.STRING:
+                    results.push(isString(value, key));
+                    break;
+                case EDataType.NUMBER:
+                    results.push(isInt(value, key));
+                    break;
+                case EDataType.BOOLEAN:
+                    results.push(isBool(value, key));
+                    break;
+                case EDataType.OBJECT:
+                    results.push(isObject(value, key));
+                    break;
+                default:
+                    break;
+            }
 
-      //minLength
-      if (schemaOption.hasOwnProperty("minLength")) {
-        results.push(minLength(value, key, schemaOption.minLength));
-      }
+            //minLength
+            if (schemaOption.hasOwnProperty('minLength')) {
+                results.push(minLength(value, key, schemaOption.minLength));
+            }
 
-      //maxLength
-      if (schemaOption.hasOwnProperty("maxLength")) {
-        results.push(maxLength(value, key, schemaOption.maxLength));
-      }
+            //maxLength
+            if (schemaOption.hasOwnProperty('maxLength')) {
+                results.push(maxLength(value, key, schemaOption.maxLength));
+            }
 
-      //maxValue
-      if (schemaOption.hasOwnProperty("maxValue")) {
-        results.push(maxValue(value, key, schemaOption.maxValue));
-      }
+            //maxValue
+            if (schemaOption.hasOwnProperty('maxValue')) {
+                results.push(maxValue(value, key, schemaOption.maxValue));
+            }
 
-      //minValue
-      if (schemaOption.hasOwnProperty("minValue")) {
-        results.push(minValue(value, key, schemaOption.minValue));
-      }
+            //minValue
+            if (schemaOption.hasOwnProperty('minValue')) {
+                results.push(minValue(value, key, schemaOption.minValue));
+            }
 
-      //inArray
-      if (schemaOption.hasOwnProperty("inArray")) {
-        results.push(inArray(value, key, schemaOption.inArray));
-      }
+            //inArray
+            if (schemaOption.hasOwnProperty('inArray')) {
+                results.push(inArray(value, key, schemaOption.inArray));
+            }
 
-      //objHasKeys
-      if (schemaOption.hasOwnProperty("objHasKeys")) {
-        results.push(objHasKeys(schemaOption.objHasKeys, key, value));
-      }
-    }
-  });
+            //objHasKeys
+            if (schemaOption.hasOwnProperty('objHasKeys')) {
+                results.push(objHasKeys(schemaOption.objHasKeys, key, value));
+            }
+        }
+    });
 
-  const filteredResults = results.filter((e) => e !== true);
-  return filteredResults.length == 0 ? true : filteredResults;
+    const filteredResults = results.filter((e) => e !== true);
+    return filteredResults.length == 0 ? true : filteredResults;
 };
