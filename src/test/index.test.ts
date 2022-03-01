@@ -248,9 +248,9 @@ describe('DataValidator', () => {
             name: 'joe',
             age: 55,
             male: true,
-            settings: {
-                notifications: {},
-            },
+            // settings: {
+            //     notifications: {},
+            // },
         };
         const result = DataValidator(invalidPerson, PersonSchema) as any;
         console.log('RESULT', result[0].settings);
