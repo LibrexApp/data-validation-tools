@@ -248,12 +248,18 @@ describe('DataValidator', () => {
             name: 'joe',
             age: 55,
             male: true,
-            // settings: {
-            //     notifications: {},
-            // },
+
+            settings: {
+                notifications: {},
+            },
         };
         const result = DataValidator(invalidPerson, PersonSchema) as any;
-        console.log('RESULT', result[0].settings);
         expect(result[0].settings[0]).toEqual('private is required');
+        expect(result[0].settings[2].notifications[0]).toEqual(
+            'muted is required'
+        );
+        expect(result[0].settings[2].notifications[1]).toEqual(
+            'mobileEnabled is required'
+        );
     });
 });
