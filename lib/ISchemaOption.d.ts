@@ -1,9 +1,9 @@
-import { EDataType } from "./EDataTypes";
+import { EDataType } from './EDataTypes';
 export interface ISchemaOption {
     key: string;
     required: boolean;
     type: EDataType;
-    additionalValidator: any;
+    customValidator?: any;
     additionalProperties?: any;
     minValue?: number;
     maxValue?: number;
