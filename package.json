@@ -1,6 +1,6 @@
 {
     "name": "data-validation-tools",
-    "version": "0.0.13",
+    "version": "0.0.14",
     "description": "Handy tools",
     "main": "lib/index.js",
     "module": "lib/index.esm.js",
