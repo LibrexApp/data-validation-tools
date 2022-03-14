@@ -4,6 +4,7 @@ export interface ISchemaOption {
     required: boolean;
     type: EDataType;
     customValidator?: any;
+    schemaOptions?: ISchemaOption[];
     additionalProperties?: any;
     minValue?: number;
     maxValue?: number;

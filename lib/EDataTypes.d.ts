@@ -3,5 +3,6 @@ export declare enum EDataType {
     NUMBER = "number",
     BOOLEAN = "boolean",
     OBJECT = "object",
+    ARRAY = "array",
     ANY = "any"
 }

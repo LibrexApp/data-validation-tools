@@ -1,0 +1,13 @@
+export declare function notEmpty(x: any, key: any): string | true;
+export declare function isString(x: any, key: any): string | true;
+export declare function isInt(x: any, key: any): string | true;
+export declare function isBool(x: any, key: any): string | true;
+export declare function isObject(x: any, key: any): string | true;
+export declare function isArray(x: any, key: any): string | true;
+export declare function maxLength(x: any, key: any, max: any): string | true;
+export declare function minLength(x: any, key: any, min: any): string | true;
+export declare function maxValue(x: any, key: any, max: any): string | true;
+export declare function minValue(x: any, key: any, min: any): string | true;
+export declare function inArray(x: any, key: any, array: any): string | true;
+export declare function objHasKeys(x: any, key: any, obj: any): any;
+export declare function checkSchemaOptions(x: any, obj: any, schema: any): void;
