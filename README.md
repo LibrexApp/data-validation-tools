@@ -17,7 +17,7 @@ yarn add data-validation-tools
 ## Import
 
 ```ts
-import { DataValidator } from 'data-validation-tools';
+import { DataValidator } from 'data-validation-tools'
 ```
 
 ## [REQUIRED] Define a Schema
@@ -66,19 +66,19 @@ const PersonSchema: ISchemaOption = [
         type: EDataType.OBJECT,
         objHasKeys: ['color', 'length'],
     },
-];
+]
 ```
 
 ## [OPTIONAL] Define an accompanying interface for intellisense
 
 ```ts
 interface IPerson {
-    name: string;
-    age: number;
-    male: boolean;
-    middleName?: string; // not required
-    weight?: number; // not required
-    alive?: boolean; // not required
+    name: string
+    age: number
+    male: boolean
+    middleName?: string // not required
+    weight?: number // not required
+    alive?: boolean // not required
 }
 ```
 
@@ -92,12 +92,12 @@ const dataFromAPIRequest = {
     // missing name, we should receive a validation error
     age: 21,
     male: true,
-};
+}
 
 // Returns true if 'dataFromAPIRequest' is a valid instance of PersonSchema
-const result = DataValidator(dataFromAPIRequest, PersonSchema);
+const result = DataValidator(dataFromAPIRequest, PersonSchema)
 
-console.log(result); // in this case, this will return ['name is required']
+console.log(result) // in this case, this will return ['name is required']
 ```
 
 ## Validation options
@@ -137,13 +137,13 @@ Examples
 const isValidPersonCheck1 = DataValidator(
     { ...otherProperties, sececondaryOccupation: 'police officer' },
     PersonSchema
-);
+)
 // this would resolve to 'occupation must not be "police officer"' since our value fails the customValidation check
 
 const isValidPersonCheck1 = DataValidator(
     { ...otherProperties, sececondaryOccupation: 'teacher' },
     PersonSchema
-);
+)
 // this evaluates to true since our value passes the customValidation check
 ```
 
@@ -178,7 +178,7 @@ const SettingsSchema = [
             },
         ],
     },
-];
+]
 ```
 
 Validation this some data against this schema would return the following...
@@ -188,11 +188,11 @@ const invalidInstance = {
     settings: {
         notifications: {},
     },
-};
+}
 
-const dataIsValid = DataValidator(invalidInstance, SettingsSchema);
+const dataIsValid = DataValidator(invalidInstance, SettingsSchema)
 
-console.log(dataIsValid);
+console.log(dataIsValid)
 // RESULT [
 //   {
 //     settings: [ 'private is required', 'notifications is required', [Object] ]

@@ -5,45 +5,49 @@ export function notEmpty(x, key) {
         (typeof x === 'object' && Object.keys(x).length === 0) ||
         (typeof x === 'string' && x.trim() == '')
         ? `${key} is required`
-        : true;
+        : true
 }
 
 export function isString(x, key) {
-    return typeof x === 'string' ? true : `${key} must be a string`;
+    return typeof x === 'string' ? true : `${key} must be a string`
 }
 
 export function isInt(x, key) {
-    return typeof x === 'number' ? true : `${key} must be a number`;
+    return typeof x === 'number' ? true : `${key} must be a number`
 }
 
 export function isBool(x, key) {
-    return typeof x === 'boolean' ? true : `${key} must be a boolean`;
+    return typeof x === 'boolean' ? true : `${key} must be a boolean`
 }
 
 export function isObject(x, key) {
-    return typeof x === 'object' ? true : `${key} must be an object`;
+    return typeof x === 'object' ? true : `${key} must be an object`
+}
+
+export function isArray(x, key) {
+    return Array.isArray(x) ? true : `${key} must be an array`
 }
 
 export function maxLength(x, key, max) {
-    return x?.length <= max ? true : `${key} must be ${max} characters or less`;
+    return x?.length <= max ? true : `${key} must be ${max} characters or less`
 }
 
 export function minLength(x, key, min) {
-    return x?.length >= min ? true : `${key} must be ${min} characters or more`;
+    return x?.length >= min ? true : `${key} must be ${min} characters or more`
 }
 
 export function maxValue(x, key, max) {
-    return x <= max ? true : `${key} must be ${max} or less`;
+    return x <= max ? true : `${key} must be ${max} or less`
 }
 
 export function minValue(x, key, min) {
-    return x >= min ? true : `${key} must be ${min} or more`;
+    return x >= min ? true : `${key} must be ${min} or more`
 }
 
 export function inArray(x, key, array) {
     return array.includes(x)
         ? true
-        : `${key} must be one of the following: ${array.join(', ')}`;
+        : `${key} must be one of the following: ${array.join(', ')}`
 }
 
 //if we want to check if an object has 1 or more required keys
@@ -54,11 +58,11 @@ export function objHasKeys(x, key, obj) {
         .map((e) => {
             return obj.hasOwnProperty(e)
                 ? true
-                : `${key} must have the following property: ${e}`;
+                : `${key} must have the following property: ${e}`
         })
-        .filter((e) => e !== true);
+        .filter((e) => e !== true)
 
-    return errors.length == 0 ? true : errors;
+    return errors.length == 0 ? true : errors
 }
 
 export function checkSchemaOptions(x, obj, schema) {}

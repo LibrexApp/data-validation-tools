@@ -1,83 +1,86 @@
-import { EDataType } from './EDataTypes';
-import { ISchemaOption } from './ISchemaOption';
+import { EDataType } from './EDataTypes'
+import { ISchemaOption } from './ISchemaOption'
 import {
     inArray,
     isBool,
     isInt,
     isObject,
     isString,
+    isArray,
     maxLength,
     maxValue,
     minLength,
     minValue,
     notEmpty,
     objHasKeys,
-} from './validators';
+} from './validators'
 
 export const DataValidator = (payload: any, schemaOptions: ISchemaOption[]) => {
-    const results = [];
+    const results = []
 
     schemaOptions.map((schemaOption: ISchemaOption) => {
-        const key = schemaOption.key;
-        const value = payload[key]; // value from payload
-        const hasValue = value !== null && value !== undefined;
+        const key = schemaOption.key
+        const value = payload[key] // value from payload
+        const hasValue = value !== null && value !== undefined
 
         if (schemaOption.required) {
-            results.push(notEmpty(value, key));
+            results.push(notEmpty(value, key))
         }
 
         if (hasValue) {
             //type checking
             switch (schemaOption.type) {
                 case EDataType.STRING:
-                    results.push(isString(value, key));
-                    break;
+                    results.push(isString(value, key))
+                    break
                 case EDataType.NUMBER:
-                    results.push(isInt(value, key));
-                    break;
+                    results.push(isInt(value, key))
+                    break
                 case EDataType.BOOLEAN:
-                    results.push(isBool(value, key));
-                    break;
+                    results.push(isBool(value, key))
+                    break
                 case EDataType.OBJECT: // REUQUIRES SCHEMA OPTIONS ARRAY
-                    results.push(isObject(value, key));
-                    break;
+                    results.push(isObject(value, key))
+                    break
+                case EDataType.ARRAY:
+                    results.push(isArray(value, key))
                 default:
-                    break;
+                    break
             }
 
             //minLength
             if (schemaOption.hasOwnProperty('minLength')) {
-                results.push(minLength(value, key, schemaOption.minLength));
+                results.push(minLength(value, key, schemaOption.minLength))
             }
 
             //maxLength
             if (schemaOption.hasOwnProperty('maxLength')) {
-                results.push(maxLength(value, key, schemaOption.maxLength));
+                results.push(maxLength(value, key, schemaOption.maxLength))
             }
 
             //maxValue
             if (schemaOption.hasOwnProperty('maxValue')) {
-                results.push(maxValue(value, key, schemaOption.maxValue));
+                results.push(maxValue(value, key, schemaOption.maxValue))
             }
 
             //minValue
             if (schemaOption.hasOwnProperty('minValue')) {
-                results.push(minValue(value, key, schemaOption.minValue));
+                results.push(minValue(value, key, schemaOption.minValue))
             }
 
             //inArray
             if (schemaOption.hasOwnProperty('inArray')) {
-                results.push(inArray(value, key, schemaOption.inArray));
+                results.push(inArray(value, key, schemaOption.inArray))
             }
 
             //objHasKeys
             if (schemaOption.hasOwnProperty('objHasKeys')) {
-                results.push(objHasKeys(schemaOption.objHasKeys, key, value));
+                results.push(objHasKeys(schemaOption.objHasKeys, key, value))
             }
 
             // customValidator function
             if (schemaOption.hasOwnProperty('customValidator')) {
-                results.push(schemaOption.customValidator(value, key));
+                results.push(schemaOption.customValidator(value, key))
             }
 
             // if is object, it should have an array of schemaOptions
@@ -86,16 +89,16 @@ export const DataValidator = (payload: any, schemaOptions: ISchemaOption[]) => {
                     const subResults = DataValidator(
                         value,
                         schemaOption.schemaOptions
-                    );
+                    )
 
                     if (subResults !== true) {
-                        results.push({ [key]: subResults });
+                        results.push({ [key]: subResults })
                     }
                 }
             }
         }
-    });
+    })
 
-    const filteredResults = results.filter((e) => e !== true);
-    return filteredResults.length == 0 ? true : filteredResults;
-};
+    const filteredResults = results.filter((e) => e !== true)
+    return filteredResults.length == 0 ? true : filteredResults
+}
