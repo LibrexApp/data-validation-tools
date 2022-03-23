@@ -13,7 +13,7 @@ import {
     minValue,
     notEmpty,
     objHasKeys,
-} from './Validators'
+} from './validators'
 
 export const DataValidator = (payload: any, schemaOptions: ISchemaOption[]) => {
     const results = []
