@@ -13,6 +13,7 @@ import {
     minValue,
     notEmpty,
     objHasKeys,
+    checkArrayValueTypes,
 } from './validators'
 
 export const DataValidator = (payload: any, schemaOptions: ISchemaOption[]) => {
@@ -81,6 +82,17 @@ export const DataValidator = (payload: any, schemaOptions: ISchemaOption[]) => {
             // customValidator function
             if (schemaOption.hasOwnProperty('customValidator')) {
                 results.push(schemaOption.customValidator(value, key))
+            }
+
+            // arrayValueTypes
+            if (schemaOption.hasOwnProperty('arrayValueTypes')) {
+                results.push(
+                    checkArrayValueTypes(
+                        value,
+                        key,
+                        schemaOption.arrayValueTypes
+                    )
+                )
             }
 
             // if is object, it should have an array of schemaOptions

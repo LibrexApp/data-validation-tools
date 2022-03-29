@@ -112,7 +112,20 @@ const PersonSchema = [
         required: false,
         type: EDataType.ARRAY,
     },
+    {
+        key: 'favoriteFoods',
+        required: false,
+        type: EDataType.ARRAY,
+        arrayValueTypes: EDataType.STRING,
+    },
+    {
+        key: 'favoriteNumbers',
+        required: false,
+        type: EDataType.ARRAY,
+        arrayValueTypes: EDataType.NUMBER,
+    },
 ]
+
 describe('DataValidator', () => {
     it('Should return "name is required"', () => {
         const invalidPerson = {
@@ -123,7 +136,6 @@ describe('DataValidator', () => {
         const result = DataValidator(invalidPerson, PersonSchema)
         expect(result[0]).toEqual('name is required')
     })
-
     it('Should return "name must be a string"', () => {
         const invalidPerson = {
             name: 123,
@@ -278,5 +290,29 @@ describe('DataValidator', () => {
 
         const result = DataValidator(invalidPerson, PersonSchema)
         expect(result[0]).toEqual('favoriteColors must be an array')
+    })
+    it(`Should return "All indexes of favoriteFoods must be a string"`, async function () {
+        const invalidPerson = {
+            name: 'joe',
+            age: 55,
+            male: true,
+            favoriteFoods: ['beans', 123],
+        }
+        const result = DataValidator(invalidPerson, PersonSchema)
+        expect(result[0]).toEqual(
+            'All indexes of favoriteFoods must be a string'
+        )
+    })
+    it(`Should return "All indexes of favoriteNumbers must be a number"`, async function () {
+        const invalidPerson = {
+            name: 'joe',
+            age: 55,
+            male: true,
+            favoriteNumbers: ['beans', 'greens'],
+        }
+        const result = DataValidator(invalidPerson, PersonSchema)
+        expect(result[0]).toEqual(
+            'All indexes of favoriteNumbers must be a number'
+        )
     })
 })
