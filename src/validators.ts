@@ -65,12 +65,7 @@ export function objHasKeys(x, key, obj) {
     return errors.length == 0 ? true : errors
 }
 
-export function checkSchemaOptions(x, obj, schema) {}
-
 export function checkArrayValueTypes(x, key, arrayValueType) {
-    console.log('x', x)
-    console.log('key', key)
-    console.log('arrayValueType', arrayValueType)
     let errors = x
         .map((e) => {
             return typeof x === arrayValueType

@@ -85,7 +85,10 @@ export const DataValidator = (payload: any, schemaOptions: ISchemaOption[]) => {
             }
 
             // arrayValueTypes
-            if (schemaOption.hasOwnProperty('arrayValueTypes')) {
+            if (
+                schemaOption.type === EDataType.ARRAY &&
+                schemaOption.hasOwnProperty('arrayValueTypes')
+            ) {
                 results.push(
                     checkArrayValueTypes(
                         value,
@@ -93,6 +96,24 @@ export const DataValidator = (payload: any, schemaOptions: ISchemaOption[]) => {
                         schemaOption.arrayValueTypes
                     )
                 )
+            }
+
+            // arrayValueSchema
+            if (
+                schemaOption.type === EDataType.ARRAY &&
+                schemaOption.hasOwnProperty('arrayValueSchema')
+            ) {
+                const subResults = value
+                    .map((e) => {
+                        return DataValidator(e, schemaOption.arrayValueSchema)
+                    })
+                    .filter((e) => e !== true)
+
+                if (subResults.length > 0) {
+                    subResults.forEach((e) => {
+                        results.push({ [key]: e })
+                    })
+                }
             }
 
             // if is object, it should have an array of schemaOptions

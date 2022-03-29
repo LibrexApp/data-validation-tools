@@ -124,6 +124,25 @@ const PersonSchema = [
         type: EDataType.ARRAY,
         arrayValueTypes: EDataType.NUMBER,
     },
+    {
+        key: 'pets',
+        required: false,
+        type: EDataType.ARRAY,
+        arrayValueTypes: EDataType.OBJECT,
+        arrayValueSchema: [
+            {
+                key: 'type',
+                required: true,
+                type: EDataType.STRING,
+                inArray: ['dog', 'cat', 'bird'],
+            },
+            {
+                key: 'name',
+                required: true,
+                type: EDataType.STRING,
+            },
+        ],
+    },
 ]
 
 describe('DataValidator', () => {
@@ -265,7 +284,6 @@ describe('DataValidator', () => {
             name: 'joe',
             age: 55,
             male: true,
-
             settings: {
                 notifications: {},
             },
@@ -287,7 +305,6 @@ describe('DataValidator', () => {
             male: true,
             favoriteColors: 'red, green',
         }
-
         const result = DataValidator(invalidPerson, PersonSchema)
         expect(result[0]).toEqual('favoriteColors must be an array')
     })
@@ -313,6 +330,23 @@ describe('DataValidator', () => {
         const result = DataValidator(invalidPerson, PersonSchema)
         expect(result[0]).toEqual(
             'All indexes of favoriteNumbers must be a number'
+        )
+    })
+    it(`Should return 'pets: name must be a string'`, async function () {
+        const invalidPerson = {
+            name: 'joe',
+            age: 55,
+            male: true,
+            pets: [
+                {
+                    type: 'dog',
+                    name: 123,
+                },
+            ],
+        }
+        const result = DataValidator(invalidPerson, PersonSchema)
+        expect(result[0]).toEqual(
+            JSON.parse(JSON.stringify({ pets: ['name must be a string'] }))
         )
     })
 })
