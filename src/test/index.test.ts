@@ -112,7 +112,39 @@ const PersonSchema = [
         required: false,
         type: EDataType.ARRAY,
     },
+    {
+        key: 'favoriteFoods',
+        required: false,
+        type: EDataType.ARRAY,
+        arrayValueTypes: EDataType.STRING,
+    },
+    {
+        key: 'favoriteNumbers',
+        required: false,
+        type: EDataType.ARRAY,
+        arrayValueTypes: EDataType.NUMBER,
+    },
+    {
+        key: 'pets',
+        required: false,
+        type: EDataType.ARRAY,
+        arrayValueTypes: EDataType.OBJECT,
+        arrayValueSchema: [
+            {
+                key: 'type',
+                required: true,
+                type: EDataType.STRING,
+                inArray: ['dog', 'cat', 'bird'],
+            },
+            {
+                key: 'name',
+                required: true,
+                type: EDataType.STRING,
+            },
+        ],
+    },
 ]
+
 describe('DataValidator', () => {
     it('Should return "name is required"', () => {
         const invalidPerson = {
@@ -123,7 +155,6 @@ describe('DataValidator', () => {
         const result = DataValidator(invalidPerson, PersonSchema)
         expect(result[0]).toEqual('name is required')
     })
-
     it('Should return "name must be a string"', () => {
         const invalidPerson = {
             name: 123,
@@ -253,7 +284,6 @@ describe('DataValidator', () => {
             name: 'joe',
             age: 55,
             male: true,
-
             settings: {
                 notifications: {},
             },
@@ -275,8 +305,48 @@ describe('DataValidator', () => {
             male: true,
             favoriteColors: 'red, green',
         }
-
         const result = DataValidator(invalidPerson, PersonSchema)
         expect(result[0]).toEqual('favoriteColors must be an array')
+    })
+    it(`Should return "All indexes of favoriteFoods must be a string"`, async function () {
+        const invalidPerson = {
+            name: 'joe',
+            age: 55,
+            male: true,
+            favoriteFoods: ['beans', 123],
+        }
+        const result = DataValidator(invalidPerson, PersonSchema)
+        expect(result[0]).toEqual(
+            'All indexes of favoriteFoods must be a string'
+        )
+    })
+    it(`Should return "All indexes of favoriteNumbers must be a number"`, async function () {
+        const invalidPerson = {
+            name: 'joe',
+            age: 55,
+            male: true,
+            favoriteNumbers: ['beans', 'greens'],
+        }
+        const result = DataValidator(invalidPerson, PersonSchema)
+        expect(result[0]).toEqual(
+            'All indexes of favoriteNumbers must be a number'
+        )
+    })
+    it(`Should return 'pets: name must be a string'`, async function () {
+        const invalidPerson = {
+            name: 'joe',
+            age: 55,
+            male: true,
+            pets: [
+                {
+                    type: 'dog',
+                    name: 123,
+                },
+            ],
+        }
+        const result = DataValidator(invalidPerson, PersonSchema)
+        expect(result[0]).toEqual(
+            JSON.parse(JSON.stringify({ pets: ['name must be a string'] }))
+        )
     })
 })

@@ -65,4 +65,14 @@ export function objHasKeys(x, key, obj) {
     return errors.length == 0 ? true : errors
 }
 
-export function checkSchemaOptions(x, obj, schema) {}
+export function checkArrayValueTypes(x, key, arrayValueType) {
+    let errors = x
+        .map((e) => {
+            return typeof x === arrayValueType
+        })
+        .filter((e) => e !== true)
+
+    return errors.length == 0
+        ? true
+        : `All indexes of ${key} must be a ${arrayValueType}`
+}

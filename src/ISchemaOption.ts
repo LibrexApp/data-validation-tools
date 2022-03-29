@@ -13,4 +13,6 @@ export interface ISchemaOption {
     maxLength?: number
     objHasKeys?: any
     inArray?: any
+    arrayValueTypes?: EDataType
+    arrayValueSchema?: ISchemaOption[]
 }
