@@ -1,3 +1,5 @@
+import { ISchemaOption } from './ISchemaOption'
+
 export function notEmpty(x, key) {
     return x === null ||
         typeof x === undefined ||
@@ -75,4 +77,19 @@ export function checkArrayValueTypes(x, key, arrayValueType) {
     return errors.length == 0
         ? true
         : `All indexes of ${key} must be a ${arrayValueType}`
+}
+
+export function doesPayloadHasAdditionalProperties(
+    payload: any,
+    schemaOptions: ISchemaOption[]
+) {
+    const payloadProperties = Object.keys(payload)
+    const schemaProperties = schemaOptions.map((e) => e.key)
+
+    // difference is all payload properties not in the schema definition
+    let difference = payloadProperties.filter(
+        (property: string) => schemaProperties.indexOf(property) < 0
+    )
+    const error = `${difference} is not a valid property for this schema`
+    return difference.length > 0 ? error : true
 }

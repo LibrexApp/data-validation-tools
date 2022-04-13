@@ -1,5 +1,5 @@
 import { EDataType } from '../EDataTypes'
-import { DataValidator } from './../index'
+import { DataValidator, ISchemaOption } from './../index'
 
 // For testing purposes
 const PersonSchema = [
@@ -347,6 +347,27 @@ describe('DataValidator', () => {
         const result = DataValidator(invalidPerson, PersonSchema)
         expect(result[0]).toEqual(
             JSON.parse(JSON.stringify({ pets: ['name must be a string'] }))
+        )
+    })
+    it(`Should return 'name is not a valid property'`, async function () {
+        const testSchema: ISchemaOption[] = [
+            {
+                key: 'email',
+                type: EDataType.STRING,
+                required: true,
+            },
+        ]
+        const invalidTestSchema = {
+            email: 'joe@gmail.com',
+            name: 'joe',
+        }
+        const schemaKeys = testSchema.map((schemaOption) => {
+            return schemaOption.key
+        })
+
+        const result = DataValidator(invalidTestSchema, testSchema)
+        expect(result[0]).toEqual(
+            'name is not a valid property for this schema'
         )
     })
 })

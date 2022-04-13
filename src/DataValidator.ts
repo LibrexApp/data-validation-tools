@@ -1,6 +1,8 @@
 import { EDataType } from './EDataTypes'
 import { ISchemaOption } from './ISchemaOption'
 import {
+    checkArrayValueTypes,
+    doesPayloadHasAdditionalProperties,
     inArray,
     isArray,
     isBool,
@@ -13,11 +15,19 @@ import {
     minValue,
     notEmpty,
     objHasKeys,
-    checkArrayValueTypes,
 } from './validators'
 
 export const DataValidator = (payload: any, schemaOptions: ISchemaOption[]) => {
     const results = []
+
+    // check if the user supplied any properties that are not in the schema
+    const payloadHasAdditionalProperties = doesPayloadHasAdditionalProperties(
+        payload,
+        schemaOptions
+    )
+    if (payloadHasAdditionalProperties !== true) {
+        results.push(payloadHasAdditionalProperties)
+    }
 
     schemaOptions.map((schemaOption: ISchemaOption) => {
         const key = schemaOption.key
